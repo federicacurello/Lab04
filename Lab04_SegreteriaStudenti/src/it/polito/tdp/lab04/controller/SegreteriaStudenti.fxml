@@ -6,8 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -48,44 +46,45 @@
                         <Insets left="20.0" top="10.0" />
                      </HBox.margin>
                   </Label>
-                  <TextField fx:id="txtMatricola" prefHeight="30.0" prefWidth="98.0" promptText="Matricola">
+                  <TextField fx:id="txtMatricola" promptText="Matricola">
+                     <HBox.margin>
+                        <Insets top="10.0" />
+                     </HBox.margin>
+                  </TextField>
+                  <Button fx:id="btnCercaNome" mnemonicParsing="false" onAction="#doCercaNome" style="-fx-background-color: green;" text="√" textFill="#f9fcfa">
+                     <HBox.margin>
+                        <Insets left="5.0" top="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  
+                  <TextField fx:id="txtNome" editable="false" prefHeight="25.0" prefWidth="118.0" promptText="Nome">
                      <HBox.margin>
                         <Insets left="5.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <ImageView fitHeight="43.0" fitWidth="89.0" onDragDetected="#doCercaNome" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@depositphotos_23906339-stock-illustration-green-glossy-web-2-0.jpg" />
-                     </image>
+                  <TextField editable="false" prefHeight="25.0" prefWidth="137.0" promptText="Cognome">
                      <HBox.margin>
-                        <Insets top="5.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <TextField fx:id="txtNome" editable="false" promptText="Nome">
-                     <HBox.margin>
-                        <Insets left="5.0" top="10.0" />
-                     </HBox.margin>
-                  </TextField>
-                  <TextField editable="false" promptText="Cognome">
-                     <HBox.margin>
-                        <Insets left="5.0" top="10.0" />
+                        <Insets left="5.0" right="20.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
                </children>
             </HBox>
             <HBox>
                <children>
-                  <Button fx:id="btnCercaCorsi" mnemonicParsing="false" onAction="#doCercaCorsi" prefHeight="25.0" prefWidth="96.0" text="Cerca corsi">
+                  <Button fx:id="btnCercaCorsi" mnemonicParsing="false" onAction="#doCercaCorsi" prefHeight="25.0" prefWidth="153.0" text="Cerca corsi">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnIscrivi" mnemonicParsing="false" onAction="#doIscrivi" prefHeight="25.0" prefWidth="68.0" text="Iscrivi">
+                  <Button fx:id="btnIscrivi" mnemonicParsing="false" onAction="#doIscrivi" prefHeight="25.0" prefWidth="132.0" text="Iscrivi">
                      <HBox.margin>
                         <Insets left="390.0" right="20.0" />
                      </HBox.margin>
                   </Button>
                </children>
+               <VBox.margin>
+                  <Insets top="5.0" />
+               </VBox.margin>
             </HBox>
             <TextArea fx:id="txtArea" editable="false">
                <VBox.margin>

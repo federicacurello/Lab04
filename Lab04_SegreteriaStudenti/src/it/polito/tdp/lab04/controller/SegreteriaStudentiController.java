@@ -13,7 +13,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 
 public class SegreteriaStudentiController {
 
@@ -24,13 +23,16 @@ public class SegreteriaStudentiController {
     private URL location;
 
     @FXML // fx:id="menuCorso"
-    private ComboBox<String> menuCorso; // Value injected by FXMLLoader
+    private ComboBox<?> menuCorso; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnCercaIscritti"
     private Button btnCercaIscritti; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtMatricola"
     private TextField txtMatricola; // Value injected by FXMLLoader
+
+    @FXML // fx:id="btnCercaNome"
+    private Button btnCercaNome; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtNome"
     private TextField txtNome; // Value injected by FXMLLoader
@@ -58,7 +60,7 @@ public class SegreteriaStudentiController {
     }
 
     @FXML
-    void doCercaNome(MouseEvent event) {
+    void doCercaNome(ActionEvent event) {
 
     }
 
@@ -82,6 +84,7 @@ public class SegreteriaStudentiController {
         assert menuCorso != null : "fx:id=\"menuCorso\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert btnCercaIscritti != null : "fx:id=\"btnCercaIscritti\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert txtMatricola != null : "fx:id=\"txtMatricola\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
+        assert btnCercaNome != null : "fx:id=\"btnCercaNome\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert txtNome != null : "fx:id=\"txtNome\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert btnCercaCorsi != null : "fx:id=\"btnCercaCorsi\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert btnIscrivi != null : "fx:id=\"btnIscrivi\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
@@ -90,4 +93,3 @@ public class SegreteriaStudentiController {
 
     }
 }
-
