@@ -62,7 +62,7 @@
                         <Insets left="5.0" top="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <TextField editable="false" prefHeight="25.0" prefWidth="137.0" promptText="Cognome">
+                  <TextField fx:id="txtCognome" editable="false" prefHeight="25.0" prefWidth="137.0" promptText="Cognome">
                      <HBox.margin>
                         <Insets left="5.0" right="20.0" top="10.0" />
                      </HBox.margin>

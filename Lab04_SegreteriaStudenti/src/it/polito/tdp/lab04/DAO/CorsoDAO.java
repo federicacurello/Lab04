@@ -8,9 +8,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 import it.polito.tdp.lab04.model.Corso;
+import it.polito.tdp.lab04.model.Model;
 import it.polito.tdp.lab04.model.Studente;
 
 public class CorsoDAO {
+	Model model;
+	List<Corso> corsi = new LinkedList<Corso>();
 
 	/*
 	 * Ottengo tutti i corsi salvati nel Db
@@ -19,7 +22,7 @@ public class CorsoDAO {
 
 		final String sql = "SELECT * FROM corso";
 
-		List<Corso> corsi = new LinkedList<Corso>();
+		
 
 		try {
 			Connection conn = ConnectDB.getConnection();
@@ -29,37 +32,67 @@ public class CorsoDAO {
 
 			while (rs.next()) {
 
-				String codins = rs.getString("codins");
-				int numeroCrediti = rs.getInt("crediti");
-				String nome = rs.getString("nome");
-				int periodoDidattico = rs.getInt("pd");
+				//String codins = rs.getString("codins");
+				//int numeroCrediti = rs.getInt("crediti");
+				//String nome = rs.getString("nome");
+				//int periodoDidattico = rs.getInt("pd");
 
-				System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
+				//System.out.println(codins + " " + numeroCrediti + " " + nome + " " + periodoDidattico);
 
-				// Crea un nuovo JAVA Bean Corso
-				// Aggiungi il nuovo oggetto Corso alla lista corsi
+				Corso s = new Corso(rs.getString("codins"), rs.getInt("crediti"), rs.getString("nome"), rs.getInt("pd"));
+				corsi.add(s);
 			}
 
-			return corsi;
-
+			conn.close();
+			
 		} catch (SQLException e) {
 			// e.printStackTrace();
 			throw new RuntimeException("Errore Db", e);
 		}
+		return corsi;
+	
 	}
 
 	/*
 	 * Dato un codice insegnamento, ottengo il corso
 	 */
-	public void getCorso(Corso corso) {
-		// TODO
+	public Corso getCorso(String codins) {
+		for(Corso c: corsi) {
+			if(c.getCodins().equals(codins))
+				return c;
+		}
+		return null;
 	}
 
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
-	public void getStudentiIscrittiAlCorso(Corso corso) {
-		// TODO
+	public List<Studente> getStudentiIscrittiAlCorso(Corso corso) {
+		final String sql = "SELECT matricola " + 
+				"FROM iscrizione " + 
+				"WHERE codins=? ";
+
+		List<Studente> studenti = new LinkedList<Studente>();
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, corso.getCodins());
+
+			ResultSet rs = st.executeQuery();
+
+			while (rs.next()) {
+
+				studenti.add(model.ottieniNome(rs.getInt("matricola")));
+			}
+
+			conn.close();
+			
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+		return studenti;
 	}
 
 	/*
