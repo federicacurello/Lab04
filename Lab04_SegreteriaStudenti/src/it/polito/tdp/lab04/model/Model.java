@@ -31,4 +31,10 @@ public class Model {
 	public List<Corso> cercaSuoiCorsi(int matricola){
 		return studenteDao.cercaSuoiCorsi(matricola);
 	}
+	public boolean iscrittoAlCorso(int matricola, String codins){
+		return studenteDao.iscrittoAlCorso(matricola, codins);
+	}
+	public boolean iscriviStudenteACorso(Studente studente, Corso corso) {
+		return corsoDao.iscriviStudenteACorso(studente, corso);
+	}
 }

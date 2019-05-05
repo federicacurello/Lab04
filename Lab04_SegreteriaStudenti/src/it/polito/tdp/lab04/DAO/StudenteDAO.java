@@ -13,7 +13,7 @@ import it.polito.tdp.lab04.model.Studente;
 public class StudenteDAO {
 
 	public Studente ottieniNome(int matricola) {
-		final String sql = "SELECT nome, cognome " + 
+		final String sql = "SELECT * " + 
 				"FROM studente " + 
 				"WHERE matricola=? ";
 
@@ -22,11 +22,14 @@ public class StudenteDAO {
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, matricola);
 
+			Studente studente = null;
 			ResultSet rs = st.executeQuery();
-			Studente s= new Studente(matricola, rs.getString("cognome"), rs.getString("nome"));
+			if (rs.next()) {
+				studente = new Studente(matricola, rs.getString("nome"), rs.getString("cognome"), rs.getString("cds"));
+			}
 			
 			conn.close();
-			return s;
+			return studente;
 			
 		} catch (SQLException e) {
 			// e.printStackTrace();
@@ -54,6 +57,30 @@ public class StudenteDAO {
 			
 			conn.close();
 			return corsi;
+			
+		} catch (SQLException e) {
+			// e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
+		}
+	}
+	public boolean iscrittoAlCorso(int matricola, String codins){
+		
+		final String sql = "SELECT COUNT(*) AS cnt " + 
+				"FROM iscrizione  " + 
+				"WHERE matricola=? AND codins=? ";
+
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setInt(1, matricola);
+			st.setString(2, codins);
+
+			ResultSet rs = st.executeQuery();
+			rs.next(); //unico risultato
+			int numero= rs.getInt("cnt");	
+			
+			conn.close();
+			return (numero>0);
 			
 		} catch (SQLException e) {
 			// e.printStackTrace();

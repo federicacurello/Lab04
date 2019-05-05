@@ -33,7 +33,7 @@ public class SegreteriaStudentiController {
     private URL location;
 
     @FXML // fx:id="menuCorso"
-    private ComboBox<?> menuCorso; // Value injected by FXMLLoader
+    private ComboBox<Corso> menuCorso; // Value injected by FXMLLoader
 
     @FXML // fx:id="btnCercaIscritti"
     private Button btnCercaIscritti; // Value injected by FXMLLoader
@@ -75,20 +75,22 @@ public class SegreteriaStudentiController {
 		corsi = model.getTuttiICorsi();
 
 		// Aggiungi tutti i corsi alla ComboBox
-		Collections.sort(corsi);
+		//Collections.sort(corsi);
 		menuCorso.getItems().addAll(corsi);
-		menuCorso.getItems().add("");
-		menuCorso.getSelectionModel().selectLast();
+		//menuCorso.getItems().add(new Corso("",0, "",0));
+		//menuCorso.getSelectionModel().selectLast();
 	}
 
     @FXML
     void doCercaCorsi(ActionEvent event) {
     	txtArea.clear();
-try {
+    	try {
+    		int matricola = Integer.parseInt(txtMatricola.getText());
+
+			Studente studente = model.ottieniNome(matricola);
 	    	
-	    	
-	    	if(txtMatricola.equals("")) {
-	    		txtArea.appendText("Errore, inserire la matricola");
+	    	if( studente==null) {
+	    		txtArea.appendText("Errore, matricola inesistente");
 	    				return;
 	    	}
 	    	
@@ -110,7 +112,7 @@ try {
 			txtArea.appendText(sb.toString());
 			
 			} catch (RuntimeException e) {
-				txtArea.setText("ERRORE DI CONNESSIONE AL DATABASE!");
+				txtArea.setText("ERRORE DI CONNESSIONE AL DATABASE!\n(Ricerca corsi)");
 			}
 
     }
@@ -123,7 +125,7 @@ try {
 		try {
 	    	
 	    	
-	    	if(menuCorso.getValue()=="") {
+	    	if(menuCorso.getValue().toString()=="") {
 	    		txtArea.appendText("Errore, inserire il corso");
 	    				return;
 	    	}
@@ -146,7 +148,7 @@ try {
 			txtArea.appendText(sb.toString());
 			
 			} catch (RuntimeException e) {
-				txtArea.setText("ERRORE DI CONNESSIONE AL DATABASE!");
+				txtArea.setText("ERRORE DI CONNESSIONE AL DATABASE!\\n(Ricerca iscritti)");
 			}
 
     }
@@ -171,13 +173,25 @@ try {
 		}catch (NumberFormatException e) {
 			txtArea.setText("Inserire una matricola nel formato corretto.");
 		} catch (RuntimeException e) {
-			txtArea.setText("ERRORE DI CONNESSIONE AL DATABASE!");
+			txtArea.setText("ERRORE DI CONNESSIONE AL DATABASE!\n(Ricerca nome)");
 		}
 
     }
 
     @FXML
     void doIscrivi(ActionEvent event) {
+    	txtArea.clear();
+    	int matricola=Integer.parseInt(txtMatricola.getText());
+    	String codins= ((Corso)(menuCorso.getValue())).getCodins();
+    	if(model.iscrittoAlCorso(matricola, codins)) {
+    		txtArea.appendText("Studente già iscritto al corso");
+    	}
+    	if(model.iscriviStudenteACorso(model.ottieniNome(matricola), model.getCorso(codins))) {
+    		txtArea.appendText("Studente appena iscritto al corso");
+    	}
+    	else {
+    		txtArea.appendText("Studente non iscritto al corso");
+    	}
 
     }
 
@@ -209,6 +223,7 @@ try {
         assert btnReset != null : "fx:id=\"btnReset\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         assert txtCognome != null : "fx:id=\"txtCognome\" was not injected: check your FXML file 'SegreteriaStudenti.fxml'.";
         
-      
+        txtArea.setStyle("-fx-font-family: monospace");  //per incolonnare correttamente i dati
+        //this.setModel(model);
     }
 }
