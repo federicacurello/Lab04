@@ -25,7 +25,7 @@ public class StudenteDAO {
 			Studente studente = null;
 			ResultSet rs = st.executeQuery();
 			if (rs.next()) {
-				studente = new Studente(matricola, rs.getString("nome"), rs.getString("cognome"), rs.getString("cds"));
+				studente = new Studente(matricola, rs.getString("cognome"), rs.getString("nome"), rs.getString("cds"));
 			}
 			
 			conn.close();

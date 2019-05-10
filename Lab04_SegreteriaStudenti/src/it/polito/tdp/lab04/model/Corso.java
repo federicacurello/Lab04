@@ -14,6 +14,7 @@ public class Corso {
 		this.pd = pd;
 	}
 
+
 	public String getCodins() {
 		return codins;
 	}

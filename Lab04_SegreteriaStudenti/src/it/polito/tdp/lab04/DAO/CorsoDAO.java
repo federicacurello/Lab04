@@ -57,20 +57,34 @@ public class CorsoDAO {
 	 * Dato un codice insegnamento, ottengo il corso
 	 */
 	public Corso getCorso(String codins) {
-		for(Corso c: corsi) {
-			if(c.getCodins().equals(codins))
-				return c;
+		final String sql = "SELECT * FROM corso where codins=?";
+		Corso c = null;
+		try {
+			Connection conn = ConnectDB.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			st.setString(1, codins);
+
+			ResultSet rs = st.executeQuery();
+
+			if (rs.next()) {
+				 c= new Corso(codins, rs.getInt("crediti"), rs.getString("nome"), rs.getInt("pd"));
+			   
+			}
+
+			conn.close();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("Errore Db", e);
 		}
-		return null;
+		return c;
 	}
 
 	/*
 	 * Ottengo tutti gli studenti iscritti al Corso
 	 */
 	public List<Studente> getStudentiIscrittiAlCorso(Corso corso) {
-		final String sql = "SELECT matricola " + 
-				"FROM iscrizione " + 
-				"WHERE codins=? ";
+		final String sql = "SELECT * FROM iscrizione , studente WHERE iscrizione.matricola=studente.matricola AND codins=?";
 
 		List<Studente> studenti = new LinkedList<Studente>();
 
@@ -83,7 +97,7 @@ public class CorsoDAO {
 
 			while (rs.next()) {
 
-				studenti.add(model.ottieniNome(rs.getInt("matricola")));
+				studenti.add(new Studente(rs.getInt("matricola"), rs.getString("nome"), rs.getString("cognome"), rs.getString("cds")));
 			}
 
 			conn.close();

@@ -6,10 +6,14 @@ public class TestModel {
 		
 		Model model = new Model();
 		
-		/*
-		 * 	Write here your test model
-		 */
-
+		System.out.println(model.getTuttiICorsi());
+		System.out.println(model.ottieniNome(146101).getCognome());
+		System.out.println(model.getCorso("01KSUPG"));
+		System.out.println(model.getStudentiIscrittiAlCorso(model.getCorso("01KSUPG")));
+		System.out.println(model.cercaSuoiCorsi(179971));
+		System.out.println(model.iscrittoAlCorso(179971, "01KSUPG"));
+		System.out.println(model.iscriviStudenteACorso(model.ottieniNome(179971), model.getCorso("02AQJPG")));
+		System.out.println(model.cercaSuoiCorsi(179971));
 	}
 
 }
